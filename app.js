@@ -8,18 +8,19 @@ const logger = require('koa-logger')
 const MongoConnect = require('./db/index')
 const index = require('./routes/index')
 const users = require('./routes/users')
+const cors = require('koa2-cors')
 
 // error handler
 onerror(app)
 MongoConnect()
 // middlewares
 app.use(bodyparser({
-  enableTypes:['json', 'form', 'text']
+  enableTypes: ['json', 'form', 'text']
 }))
 app.use(json())
 app.use(logger())
 app.use(require('koa-static')(__dirname + '/public'))
-
+app.use(cors())
 app.use(views(__dirname + '/views', {
   extension: 'pug'
 }))
